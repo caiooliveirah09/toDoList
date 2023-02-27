@@ -127,7 +127,10 @@ export default {
       localStorage.setItem("user", JSON.stringify(users[user.id]));
     },
     checkTask(id) {
-      console.log("checado pae");
+      const user = JSON.parse(localStorage.getItem("user"));
+      const users = JSON.parse(localStorage.getItem("users"));
+      console.log(id);
+      // falta terminar aqui
     },
     filterTasks() {
       const allTasks = JSON.parse(localStorage.getItem("user")).tasks;
