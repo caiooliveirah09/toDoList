@@ -1,36 +1,37 @@
 <template>
   <v-app>
-    <v-main>
-      <v-card>
-        <h1>Create a new account!</h1>
-        <h2>is fast.</h2>
-        <v-form @submit.prevent="register">
-          <label class="label" for="password">Name:</label>
-          <v-text-field id="name" v-model="name" type="name" name="name" />
-          <div v-if="nameError">{{ nameError }}</div>
-          <label class="label" for="email">Email:</label>
-          <v-text-field id="email" v-model="email" type="email" name="email" />
-          <div v-if="emailError">{{ emailError }}</div>
-          <br /><br />
-          <label class="label" for="password">Password:</label>
-          <v-text-field
-            id="password"
-            v-model="password"
-            type="password"
-            name="password"
-          />
-          <div v-if="passwordError">{{ passwordError }}</div>
-          <br /><br />
-          <v-btn type="submit" :disabled="isDisabled">sign up</v-btn>
-          <v-btn flat to="/login" nuxt>i already have an account</v-btn>
-        </v-form>
-      </v-card>
-    </v-main>
+    <v-card>
+      <h1>Create a new account!</h1>
+      <h2>is fast.</h2>
+      <v-form @submit.prevent="register">
+        <label class="label" for="password">Name:</label>
+        <v-text-field id="name" v-model="name" type="name" name="name" />
+        <div v-if="nameError">{{ nameError }}</div>
+        <label class="label" for="email">Email:</label>
+        <v-text-field id="email" v-model="email" type="email" name="email" />
+        <div v-if="emailError">{{ emailError }}</div>
+        <label class="label" for="password">Password:</label>
+        <v-text-field
+          id="password"
+          v-model="password"
+          type="password"
+          name="password"
+        />
+        <div v-if="passwordError">{{ passwordError }}</div>
+        <v-btn type="submit" :disabled="isDisabled">sign up</v-btn>
+        <v-btn flat to="/login" nuxt>i already have an account</v-btn>
+      </v-form>
+    </v-card>
   </v-app>
 </template>
 
 <script>
 export default {
+  name: "index",
+  mounted() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) navigateTo("/");
+  },
   data() {
     return {
       name: "",
@@ -107,17 +108,23 @@ export default {
     },
 
     register() {
-      const users = JSON.parse(localStorage.getItem("user"));
+      const users = JSON.parse(localStorage.getItem("users"));
       const newUser = {
         name: this.name,
         email: this.email,
         password: this.password,
+        tasks: [],
       };
       if (!users) {
-        localStorage.setItem("user", JSON.stringify([{ id: 1, ...newUser }]));
+        localStorage.setItem("users", JSON.stringify([{ id: 0, ...newUser }]));
+        localStorage.setItem("user", JSON.stringify({ id: 0, ...newUser }));
       } else {
-        users.push({ id: users.length + 1, ...newUser });
-        localStorage.setItem("user", JSON.stringify(users));
+        users.push({ id: users.length, ...newUser });
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ id: users.length - 1, ...newUser })
+        );
       }
       console.log("successfully registered user!", this.email, this.password);
       navigateTo("/");
