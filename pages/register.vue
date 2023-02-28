@@ -1,23 +1,33 @@
 <template>
-  <v-app>
-    <v-card>
+  <v-app class="div-app">
+    <v-card class="div-card">
       <h1>Create a new account!</h1>
       <h2>is fast.</h2>
       <v-form @submit.prevent="register">
-        <label class="label" for="password">Name:</label>
-        <v-text-field id="name" v-model="name" type="name" name="name" />
+        <v-text-field
+          id="name"
+          v-model="name"
+          type="name"
+          name="name"
+          label="Name"
+        />
         <div v-if="nameError">{{ nameError }}</div>
-        <label class="label" for="email">Email:</label>
-        <v-text-field id="email" v-model="email" type="email" name="email" />
+        <v-text-field
+          id="email"
+          v-model="email"
+          type="email"
+          name="email"
+          label="Email"
+        />
         <div v-if="emailError">{{ emailError }}</div>
-        <label class="label" for="password">Password:</label>
         <v-text-field
           id="password"
           v-model="password"
           type="password"
           name="password"
+          label="Password"
         />
-        <div v-if="passwordError">{{ passwordError }}</div>
+        <div class="div-v-btn" v-if="passwordError">{{ passwordError }}</div>
         <v-btn type="submit" :disabled="isDisabled">sign up</v-btn>
         <v-btn flat to="/login" nuxt>i already have an account</v-btn>
       </v-form>

@@ -1,18 +1,9 @@
 <template>
-  <v-card max-width="448" class="mx-auto" color="grey-lighten-3">
+  <v-card max-width="550px" class="mx-auto">
     <v-layout>
-      <v-app-bar color="teal-darken-4">
-        <template v-slot:image>
-          <v-img
-            gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)"
-          ></v-img>
-        </template>
+      <v-app-bar color="#FFFFFF">
+        <template v-slot:image> </template>
         <v-app-bar-title>TO DO LIST - {{ name }}</v-app-bar-title>
-        <v-text-field
-          v-if="newFilter"
-          v-model="filter"
-          label="filter"
-        ></v-text-field>
         <v-spacer></v-spacer>
         <v-btn icon @click="newFilter = !newFilter">
           <v-icon>mdi-magnify</v-icon>
@@ -25,7 +16,13 @@
         </v-btn>
       </v-app-bar>
       <v-main>
-        <v-container fluid>
+        <v-container>
+          <v-text-field
+            class="v-text-field-index"
+            v-if="newFilter"
+            v-model="filter"
+            label="filter"
+          ></v-text-field>
           <v-sheet v-if="newTaskForm" class="mx-auto">
             <v-form fast-fail @submit.prevent="addNewTask">
               <v-text-field v-model="title" label="title"></v-text-field>
@@ -37,7 +34,7 @@
               >
             </v-form>
           </v-sheet>
-          <v-row dense v-if="!newTaskForm && tasks && tasks.length >= 1">
+          <v-row v-if="!newTaskForm && tasks && tasks.length >= 1">
             <v-col v-for="task in tasks" :key="task.id" cols="12">
               <v-card class="todo-card" elevation="2">
                 <v-card-text>
@@ -159,14 +156,4 @@ export default {
 };
 </script>
 
-<style>
-.todo-card {
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-}
-.title {
-  font-size: 24px;
-  margin-bottom: 8px;
-}
-</style>
+<style></style>
